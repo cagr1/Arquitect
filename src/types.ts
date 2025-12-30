@@ -15,12 +15,17 @@ export interface Project {
   year: string;
   imageUrl: string;
   size: 'large' | 'medium' | 'small';
+  key: string;
 }
 
-export enum VizState  {
-  SCHEMATIC= 'SCHEMATIC',
-  VOLUMETRIC= 'VOLUMETRIC'
-}
+
+export const VizStateValues = {
+  SCHEMATIC: 'SCHEMATIC',
+  VOLUMETRIC: 'VOLUMETRIC',
+} as const;
+
+
+export type VizState = typeof VizStateValues[keyof typeof VizStateValues];
 
 
 export interface HouseBlock {

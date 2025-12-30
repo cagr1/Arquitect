@@ -1,7 +1,11 @@
-
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../locales';
 
 export const Hero: React.FC = () => {
+  const { locale } = useLanguage();
+  const t = translations[locale];
+
   return (
     <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#050505] px-6 md:px-12">
       {/* Background Grid Pattern - Subtle */}
@@ -14,19 +18,19 @@ export const Hero: React.FC = () => {
         <div className="md:col-span-7 flex flex-col justify-center h-full pt-20 md:pt-0">
           <div className="overflow-hidden mb-8">
             <span className="inline-block text-[10px] uppercase tracking-[0.6em] opacity-30 animate-[reveal-up_1s_cubic-bezier(0.16,1,0.3,1)_forwards]">
-              Monograph No. 04 / Æther
+              {t.hero.monograph}
             </span>
           </div>
 
           <h1 className="font-serif text-[clamp(3.5rem,10vw,12rem)] leading-[0.85] tracking-tighter mb-12">
             <div className="overflow-hidden">
               <span className="block animate-[reveal-up_1.2s_cubic-bezier(0.16,1,0.3,1)_forwards]">
-                Spatial /
+                {t.hero.title_line1}
               </span>
             </div>
             <div className="overflow-hidden">
               <span className="block italic animate-[reveal-up_1.4s_cubic-bezier(0.16,1,0.3,1)_0.1s_forwards] pl-[0.1em]">
-                Logic.
+                {t.hero.title_line2}
               </span>
             </div>
           </h1>
@@ -34,11 +38,10 @@ export const Hero: React.FC = () => {
           <div className="max-w-md overflow-hidden">
             <div className="animate-[reveal-up_1.6s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards] opacity-40">
               <p className="text-sm md:text-lg font-light leading-relaxed mb-6">
-                Redefining the relationship between volume and void through a lens of absolute structural necessity.
+                {t.hero.description}
               </p>
-              <p className="text-[10px] uppercase tracking-widest leading-loose">
-                Berlin &mdash; Tokyo <br />
-                International Practice
+              <p className="text-[10px] uppercase tracking-widest leading-loose whitespace-pre-line">
+                {t.hero.locations}
               </p>
             </div>
           </div>
@@ -58,7 +61,7 @@ export const Hero: React.FC = () => {
           {/* Subtle Technical Annotation */}
           <div className="absolute bottom-12 right-0 z-30 opacity-20 hidden md:block">
             <div className="rotate-90 origin-right text-[9px] font-mono tracking-[0.4em] uppercase whitespace-nowrap">
-              Study Ref: Geometry_0192.3_B
+              {t.hero.studyRef}
             </div>
           </div>
         </div>

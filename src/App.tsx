@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Header } from "./components/Header";
 import {Hero} from "./components/Hero";
-import {Approach} from "./components/Approach";
-import {Concept} from "./components/Concept";
+import {ArchitecturalVisualizer} from "./components/ArchitecturalVisualizer";
 import {Philosophy} from "./components/Philosophy";
 import {Projects} from "./components/Projects";
 import {Footer} from "./components/Footer";
@@ -43,7 +42,9 @@ const [locale, setLocale] = useState<Locale>('en');
       
       <Philosophy />
       
-      <Concept />
+      <ArchitecturalVisualizer />
+      
+      
       
       <Projects />
 
