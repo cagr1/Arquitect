@@ -7,12 +7,11 @@ export const es = {
     contact: 'Contacto',
   },
   hero: {
-    monograph: 'Monografía No. 04 / Æther',
+    monograph: 'Monografía No. 04 ',
     title_line1: 'Alejandro ',
     title_line2: 'Romero',
-    description: 'Redefiniendo la relación entre volumen y vacío a través de una lente de absoluta necesidad estructural.',
-    locations: 'Berlín \u2014 Tokio \n Práctica Internacional',
-    studyRef: 'Ref. Estudio: Geometría_0192.3_B',
+    description: 'Arquitecto enfocado en transformar ideas en espacios claros y habitables. Cada proyecto busca el equilibrio entre estructura, luz y experiencia.',
+    about:'Arquitectura residencial y conceptual guiada por precisión, prolijidad y honestidad material.'
   },
   philosophy: {
     label: 'Nuestro Ethos / 01',
@@ -39,13 +38,13 @@ export const es = {
   },
   concept: {
     label: 'Estudio Interactivo / 01',
-    title_prefix: 'Explora el',
-    title_highlight: 'Gemelo Digital',
-    description: 'Una casa no es solo un plano\u2014es un volumen para ser navegado, experimentado y entendido. Nuestra herramienta de visualización le permite transicionar fluidamente entre esquemas técnicos y renders volumétricos completos mientras explora cada ángulo en tiempo real.',
-    renderMode: 'Modo de Renderizado',
+    title_prefix: 'De una idea a',
+    title_highlight: 'Experciencia Espacial',
+    description: 'La arquitectura no nace construida. Nace como una idea que debe probarse en el espacio. Este modelo interactivo transforma conceptos iniciales en volúmenes recorribles, permitiendo comprender proporción, luz y escala antes de construir. Aquí, las decisiones dejan de ser abstractas.',
+    renderMode: 'Estado de Diseño',
     modes: {
-      schematic: 'Esquemático',
-      volumetric: 'Volumétrico',
+      schematic: 'Estructura conceptual',
+      volumetric: 'Experiencia espacial',
     },
     engine: 'Motor: Three.js R128',
     nav: {
@@ -56,6 +55,20 @@ export const es = {
       zoom_desc: 'para hacer zoom',
       pan: 'Clic Derecho',
       pan_desc: 'para desplazar la vista',
+    },
+    features: {
+      realtime: {
+        title: 'Tiempo Real',
+        subtitle: 'Renderizado',
+      },
+      dynamic: {
+        title: 'Dinámico',
+        subtitle: 'Experiencia',
+      },
+    },
+    feedback: {
+      title: 'Feedback',
+      description: 'Experimenta el flujo del espacio y la luz mientras interactúan con los elementos estructurales.',
     },
     specs: {
       fov: 'FOV',
@@ -101,6 +114,12 @@ export const es = {
         desc: 'La armonía final de luz, mobiliario y atmósfera ambiental.',
       },
     },
+  },
+  largeDivider: {
+    title: 'Arquitectura como experiencia',
+    subtitle: 'Definiendo el espacio esencial',
+    paragraph: 'Alejandro Romero Studio',
+    
   },
   footer: {
     title_prefix: "Creemos",

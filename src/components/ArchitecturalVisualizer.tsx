@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { VizStateValues } from '../types';
 import type { VizState } from '../types';
@@ -92,24 +92,40 @@ class SimpleOrbitControls {
 export const ArchitecturalVisualizer: React.FC = () => {
   const [mode, setMode] = useState<VizState>(VizStateValues.SCHEMATIC);
   const { locale } = useLanguage();
-    const t = translations[locale];
+  const t = translations[locale];
   
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInitializedRef = useRef(false);
   const sceneDataRef = useRef<{
+    scene: THREE.Scene;
+    camera: THREE.PerspectiveCamera;
+    renderer: THREE.WebGLRenderer;
+    controls: SimpleOrbitControls;
     solids: THREE.Group;
     wires: THREE.Group;
     grid: THREE.GridHelper;
     progress: number;
     targetMode: VizState;
+    frameId: number;
   } | null>(null);
 
-  // ✅ CRÍTICO: Este useEffect NO debe tener dependencias del contexto
+  // Three.js initialization
   useEffect(() => {
-    if (!containerRef.current || isInitializedRef.current) return;
+    if (!containerRef.current) return;
     
-    isInitializedRef.current = true;
-    console.log('🎬 Initializing 3D Scene (ONCE)');
+    // Critical: Check if already initialized AND still has canvas
+    const existingCanvas = containerRef.current.querySelector('canvas');
+    if (sceneDataRef.current && existingCanvas) {
+      console.log('⚠️ Scene already exists with canvas, skipping init');
+      return;
+    }
+    
+    // Clean up any orphaned canvas
+    if (existingCanvas && !sceneDataRef.current) {
+      console.log('🧹 Removing orphaned canvas');
+      existingCanvas.remove();
+    }
+    
+    console.log('🎬 Initializing 3D Scene');
 
     // Scene Setup
     const scene = new THREE.Scene();
@@ -125,7 +141,15 @@ export const ArchitecturalVisualizer: React.FC = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    containerRef.current.appendChild(renderer.domElement);
+    
+    // Append canvas
+    try {
+      containerRef.current.appendChild(renderer.domElement);
+      console.log('✅ Canvas appended to DOM');
+    } catch (err) {
+      console.error('❌ Failed to append canvas:', err);
+      return;
+    }
 
     const controls = new SimpleOrbitControls(camera, renderer.domElement);
 
@@ -199,9 +223,6 @@ export const ArchitecturalVisualizer: React.FC = () => {
     createPart(new THREE.BoxGeometry(2.2, 2, 0.1), [-1.4, 1, 2.05], 0x5a5a5a, 0.4, 0.6);
     createPart(new THREE.BoxGeometry(8, 0.1, 6), [0, 0.05, 0.5], 0xd4c8b0, 0, 1);
 
-    console.log(`✅ Created ${solidsGroup.children.length} solid parts`);
-    console.log(`✅ Created ${wireframesGroup.children.length} wireframe parts`);
-
     // Lighting
     const ambient = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambient);
@@ -220,28 +241,32 @@ export const ArchitecturalVisualizer: React.FC = () => {
     const fillLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
     scene.add(fillLight);
 
-    // Store scene data
-    sceneDataRef.current = {
+    // Store scene data BEFORE starting animation
+    const sceneData = {
+      scene,
+      camera,
+      renderer,
+      controls,
       solids: solidsGroup,
       wires: wireframesGroup,
       grid: grid,
       progress: 0,
-      targetMode: VizStateValues.SCHEMATIC
+      targetMode: VizStateValues.SCHEMATIC,
+      frameId: 0
     };
+    
+    sceneDataRef.current = sceneData;
 
     // Animation Loop
-    let frameId: number;
     const animate = () => {
-      frameId = requestAnimationFrame(animate);
+      sceneData.frameId = requestAnimationFrame(animate);
       
-      if (!sceneDataRef.current) return;
-
-      const target = sceneDataRef.current.targetMode === VizStateValues.VOLUMETRIC ? 1 : 0;
-      sceneDataRef.current.progress += (target - sceneDataRef.current.progress) * 0.08;
-      const p = sceneDataRef.current.progress;
+      const target = sceneData.targetMode === VizStateValues.VOLUMETRIC ? 1 : 0;
+      sceneData.progress += (target - sceneData.progress) * 0.08;
+      const p = sceneData.progress;
 
       // Update solids
-      sceneDataRef.current.solids.children.forEach((child) => {
+      sceneData.solids.children.forEach((child) => {
         const mesh = child as THREE.Mesh;
         const mat = mesh.material as THREE.MeshStandardMaterial;
         mat.opacity = p;
@@ -249,13 +274,13 @@ export const ArchitecturalVisualizer: React.FC = () => {
       });
 
       // Update wireframes
-      sceneDataRef.current.wires.children.forEach((child) => {
+      sceneData.wires.children.forEach((child) => {
         const wire = child as THREE.LineSegments;
         (wire.material as THREE.LineBasicMaterial).opacity = 1 - (p * 0.7);
       });
 
       // Update grid
-      (sceneDataRef.current.grid.material as THREE.LineBasicMaterial).opacity = 0.15 + (0.15 * (1 - p));
+      (sceneData.grid.material as THREE.LineBasicMaterial).opacity = 0.15 + (0.15 * (1 - p));
 
       controls.update();
       renderer.render(scene, camera);
@@ -265,12 +290,12 @@ export const ArchitecturalVisualizer: React.FC = () => {
     console.log('🎥 Animation loop started');
 
     const handleResize = () => {
-      if (!containerRef.current) return;
+      if (!containerRef.current || !sceneDataRef.current) return;
       const w = containerRef.current.clientWidth;
       const h = containerRef.current.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
+      sceneDataRef.current.camera.aspect = w / h;
+      sceneDataRef.current.camera.updateProjectionMatrix();
+      sceneDataRef.current.renderer.setSize(w, h);
     };
 
     window.addEventListener('resize', handleResize);
@@ -278,21 +303,29 @@ export const ArchitecturalVisualizer: React.FC = () => {
     return () => {
       console.log('🧹 Cleaning up 3D scene');
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(frameId);
-      renderer.dispose();
-      controls.dispose();
-      if (containerRef.current && renderer.domElement.parentNode) {
-        containerRef.current.removeChild(renderer.domElement);
+      
+      if (sceneDataRef.current) {
+        cancelAnimationFrame(sceneDataRef.current.frameId);
+        sceneDataRef.current.renderer.dispose();
+        sceneDataRef.current.controls.dispose();
+        
+        // Only remove canvas if container still exists
+        if (containerRef.current) {
+          const canvas = containerRef.current.querySelector('canvas');
+          if (canvas) {
+            canvas.remove();
+            console.log('✅ Canvas removed from DOM');
+          }
+        }
+        
+        sceneDataRef.current = null;
       }
-      sceneDataRef.current = null;
-      isInitializedRef.current = false;
     };
-  }, []); // ✅ VACÍO - No depende de locale ni nada más
+  }, []); // Empty deps
 
   // Update mode when state changes
   useEffect(() => {
     if (sceneDataRef.current) {
-      console.log(`🔄 Mode changed to: ${mode}`);
       sceneDataRef.current.targetMode = mode;
     }
   }, [mode]);
@@ -305,28 +338,27 @@ export const ArchitecturalVisualizer: React.FC = () => {
           <div className="lg:col-span-5 space-y-8">
             <div>
               <span className="text-[10px] uppercase tracking-[0.4em] font-mono text-gray-400 block mb-4">
-                {t.label}
+                {t.concept.label}
               </span>
               <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-gray-900">
-                {t.title_prefix}<br />
-                <span className="italic text-gray-500">{t.title_highlight}</span>
+                {t.concept.title_prefix}<br />
+                <span className="italic text-gray-500">{t.concept.title_highlight}</span>
               </h2>
             </div>
             
             <p className="text-lg text-gray-600 leading-relaxed max-w-md">
-              {t.description}
+              {t.concept.description}
             </p>
 
             <div className="pt-6 space-y-6">
               <div className="space-y-3">
                 <span className="text-[10px] uppercase tracking-widest font-bold text-gray-400">
-                  {t.renderMode}
+                  {t.concept.renderMode}
                 </span>
                 <div className="flex items-center space-x-4">
                   <button 
                     onClick={() => {
                       const newMode = mode === VizStateValues.SCHEMATIC ? VizStateValues.VOLUMETRIC : VizStateValues.SCHEMATIC;
-                      console.log(`🖱️ Button clicked. Changing from ${mode} to ${newMode}`);
                       setMode(newMode);
                     }}
                     className="relative w-20 h-10 bg-gray-200 rounded-full p-1 transition-all duration-300 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
@@ -341,41 +373,26 @@ export const ArchitecturalVisualizer: React.FC = () => {
                   </button>
                   <div className="flex flex-col">
                     <span className="text-sm font-mono uppercase tracking-widest font-medium text-gray-800">
-                      {mode === VizStateValues.SCHEMATIC ? t.modes.schematic : t.modes.volumetric}
+                      {mode === VizStateValues.SCHEMATIC ? t.concept.modes.schematic : t.concept.modes.volumetric}
                     </span>
-                    <span className="text-[9px] text-gray-400 uppercase tracking-wide">
-                      {t.engine}
-                    </span>
+                    
                   </div>
                 </div>
               </div>
 
               <div className="p-5 border border-gray-200 rounded-lg bg-white/80 backdrop-blur-sm max-w-xs shadow-sm">
                 <h4 className="text-[10px] font-bold uppercase tracking-widest mb-3 text-gray-500">
-                  {t.nav.title}
+                  {t.concept.nav.title}
                 </h4>
                 <ul className="text-[10px] font-mono text-gray-600 space-y-1.5">
-                  <li>• {t.nav.rotate} : {t.nav.rotate_desc}</li>
-                  <li>• {t.nav.zoom} : {t.nav.zoom_desc}</li>
-                  <li>• {t.nav.pan} : {t.nav.pan_desc}</li>
+                  <li>• {t.concept.nav.rotate} : {t.concept.nav.rotate_desc}</li>
+                  <li>• {t.concept.nav.zoom} : {t.concept.nav.zoom_desc}</li>
+                  <li>• {t.concept.nav.pan} : {t.concept.nav.pan_desc}</li>
                 </ul>
               </div>
             </div>
 
-            <div className="flex space-x-12 pt-8 border-t border-gray-200">
-              <div>
-                <span className="block font-serif text-3xl font-light text-gray-900">Real-time</span>
-                <span className="text-[9px] uppercase tracking-widest text-gray-400 font-mono">
-                  Rendering
-                </span>
-              </div>
-              <div>
-                <span className="block font-serif text-3xl font-light text-gray-900">Dynamic</span>
-                <span className="text-[9px] uppercase tracking-widest text-gray-400 font-mono">
-                  Shadows
-                </span>
-              </div>
-            </div>
+            
           </div>
 
           <div className="lg:col-span-7 relative">
@@ -400,27 +417,20 @@ export const ArchitecturalVisualizer: React.FC = () => {
 
               <div className="absolute bottom-6 right-6 text-right pointer-events-none">
                 <div className="text-[9px] font-mono text-gray-400 uppercase leading-loose">
-                  {t.specs.fov}: 45.00°<br />
-                  {t.specs.aa}: 16X MSAA<br />
-                  {t.specs.renderer}: PBR
+                  {t.concept.specs.fov}: 45.00°<br />
+                  {t.concept.specs.aa}: 16X MSAA<br />
+                  {t.concept.specs.renderer}: PBR
                 </div>
               </div>
 
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none">
                 <span className="text-[9px] uppercase tracking-widest text-gray-400 font-mono bg-white/80 px-4 py-2 rounded-full backdrop-blur-sm shadow-sm">
-                  {t.canvas_hint}
+                  {t.concept.canvas_hint}
                 </span>
               </div>
             </div>
 
-            <div className="absolute -bottom-6 -left-6 bg-gray-900 text-white p-6 hidden xl:block z-10 shadow-2xl max-w-xs">
-              <h4 className="text-[10px] uppercase tracking-[0.2em] font-bold mb-3 text-gray-400">
-                Spatial Feedback
-              </h4>
-              <p className="text-[11px] font-light leading-relaxed text-gray-300">
-                Rotate the view to inspect structural details. Volumetric mode displays materials with physically-based rendering and real-time shadow mapping.
-              </p>
-            </div>
+            
           </div>
 
         </div>

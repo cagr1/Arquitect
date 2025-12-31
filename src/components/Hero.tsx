@@ -16,11 +16,7 @@ export const Hero: React.FC = () => {
       <div className="relative z-10 w-full max-w-screen-2xl h-full grid grid-cols-1 md:grid-cols-12 items-center">
         {/* Left Side: Typography */}
         <div className="md:col-span-7 flex flex-col justify-center h-full pt-20 md:pt-0">
-          <div className="overflow-hidden mb-8">
-            <span className="inline-block text-[10px] uppercase tracking-[0.6em] opacity-30 animate-[reveal-up_1s_cubic-bezier(0.16,1,0.3,1)_forwards]">
-              {t.hero.monograph}
-            </span>
-          </div>
+          
 
           <h1 className="font-serif text-[clamp(3.5rem,10vw,12rem)] leading-[0.85] tracking-tighter mb-12">
             <div className="overflow-hidden">
@@ -41,7 +37,7 @@ export const Hero: React.FC = () => {
                 {t.hero.description}
               </p>
               <p className="text-[10px] uppercase tracking-widest leading-loose whitespace-pre-line">
-                {t.hero.locations}
+                {t.hero.about}
               </p>
             </div>
           </div>
@@ -58,12 +54,7 @@ export const Hero: React.FC = () => {
             />
           </div>
           
-          {/* Subtle Technical Annotation */}
-          <div className="absolute bottom-12 right-0 z-30 opacity-20 hidden md:block">
-            <div className="rotate-90 origin-right text-[9px] font-mono tracking-[0.4em] uppercase whitespace-nowrap">
-              {t.hero.studyRef}
-            </div>
-          </div>
+          
         </div>
       </div>
 

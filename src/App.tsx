@@ -7,11 +7,13 @@ import {Projects} from "./components/Projects";
 import {Footer} from "./components/Footer";
 import type { Locale } from './types';
 import { LanguageContext } from './context/LanguageContext';
+import { translations } from './locales';
 import './App.css'
 
 
 const App: React.FC = () => {
 const [locale, setLocale] = useState<Locale>('en');
+const t = translations[locale];
 
   useEffect(() => {
     
@@ -25,7 +27,7 @@ const [locale, setLocale] = useState<Locale>('en');
           }
         });
       },
-      { threshold: 0.05, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.05, rootMargin: '0px 0px -10px 0px' }
     );
 
     const revealElements = document.querySelectorAll('.reveal');
@@ -51,10 +53,10 @@ const [locale, setLocale] = useState<Locale>('en');
       {/* Large visual divider */}
       <div className="bg-[#0a0a0a] overflow-hidden whitespace-nowrap py-24 border-y border-white/5">
         <div className="animate-[marquee_80s_linear_infinite] inline-block">
-          <span className="font-serif text-[15vw] leading-none uppercase tracking-tighter opacity-5 mr-12">Architecture as experience</span>
-          <span className="font-serif text-[15vw] leading-none uppercase tracking-tighter opacity-5 mr-12">Defining Essential Space</span>
-          <span className="font-serif text-[15vw] leading-none uppercase tracking-tighter opacity-5 mr-12">The Poetry of Structure</span>
-          <span className="font-serif text-[15vw] leading-none uppercase tracking-tighter opacity-5 mr-12">Ethereal Foundations</span>
+          <span className="font-serif text-[15vw] leading-none uppercase tracking-tighter opacity-5 mr-12">{t.largeDivider.title}</span>
+          <span className="font-serif text-[15vw] leading-none uppercase tracking-tighter opacity-5 mr-12">{t.largeDivider.subtitle}</span>
+          <span className="font-serif text-[15vw] leading-none uppercase tracking-tighter opacity-5 mr-12">{t.largeDivider.paragraph}</span>
+          
         </div>
       </div>
 

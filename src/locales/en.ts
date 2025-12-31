@@ -7,12 +7,11 @@ export const en = {
     contact: 'Contact',
   },
   hero: {
-    monograph: 'Monograph No. 04 / Æther',
+    monograph: 'Monograph No. 04 ',
     title_line1: 'Alejandro ',
     title_line2: 'Romero',
-    description: 'Redefining the relationship between volume and void through a lens of absolute structural necessity.',
-    locations: 'Berlin \u2014 Tokyo \n International Practice',
-    studyRef: 'Study Ref: Geometry_0192.3_B',
+    description: 'Architect focused on translating ideas into spatial clarity.Each project is approached as a balance between structure, light, and lived experience.',
+    about:'Residential and conceptual architecture driven by precision, restraint, and material honesty.'
   },
   philosophy: {
     label: 'Our Ethos / 01',
@@ -39,13 +38,13 @@ export const en = {
   },
   concept: {
     label: 'Interactive Studio / 01',
-    title_prefix: 'Explore the',
-    title_highlight: 'Digital Twin',
-    description: 'A house is not just a plan\u2014it is a volume to be navigated, experienced, and understood. Our visualization tool allows you to transition seamlessly between technical wireframes and full volumetric renders while exploring every angle in real-time.',
-    renderMode: 'Render Mode',
+    title_prefix: 'From Idea to',
+    title_highlight: 'Spatial Reality',
+    description: 'Architecture begins as an idea, but it must be tested in space. This interactive model transforms early concepts into navigable volumes, allowing you to experience proportion, light, and scale before a single brick is laid. Design decisions become visible, tangible, and intentional.',
+    renderMode: 'Design States',
     modes: {
-      schematic: 'Schematic',
-      volumetric: 'Volumetric',
+      schematic: 'Conceptual Structure',
+      volumetric: 'Spatial Experience',
     },
     engine: 'Engine: Three.js R128',
     nav: {
@@ -57,6 +56,17 @@ export const en = {
       pan: 'Right Click',
       pan_desc: 'to pan position',
     },
+    features: {
+      realtime: {
+        title: 'Realtime',
+        subtitle: 'Rendering',
+      },
+      dynamic: {
+        title: 'Dynamic',
+        subtitle: 'Experience',
+      },
+    },
+    
     specs: {
       fov: 'FOV',
       aa: 'AA',
@@ -101,6 +111,12 @@ export const en = {
         desc: 'The final harmony of light, furniture, and environmental atmosphere.',
       },
     },
+  },
+  largeDivider: {
+    title: 'Architecture as experience',
+    subtitle: 'Defining Essential Space',
+    paragraph: 'Alejandro Romero Studio',
+    
   },
   footer: {
     title_prefix: "Let's craft",
