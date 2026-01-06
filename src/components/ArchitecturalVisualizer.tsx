@@ -251,7 +251,7 @@ export const ArchitecturalVisualizer: React.FC = () => {
       wires: wireframesGroup,
       grid: grid,
       progress: 0,
-      targetMode: VizStateValues.SCHEMATIC,
+      targetMode: VizStateValues.SCHEMATIC as VizState,
       frameId: 0
     };
     
@@ -300,6 +300,8 @@ export const ArchitecturalVisualizer: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
+    const currentContainer = containerRef.current;
+
     return () => {
       console.log('🧹 Cleaning up 3D scene');
       window.removeEventListener('resize', handleResize);
@@ -310,8 +312,8 @@ export const ArchitecturalVisualizer: React.FC = () => {
         sceneDataRef.current.controls.dispose();
         
         // Only remove canvas if container still exists
-        if (containerRef.current) {
-          const canvas = containerRef.current.querySelector('canvas');
+        if (currentContainer) {
+          const canvas = currentContainer.querySelector('canvas');
           if (canvas) {
             canvas.remove();
             console.log('✅ Canvas removed from DOM');
