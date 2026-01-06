@@ -10,6 +10,7 @@ import {Footer} from "./components/Footer";
 import type { Locale } from './types';
 import { LanguageContext } from './context/LanguageContext';
 import { translations } from './locales';
+import { Analytics } from "@vercel/analytics/react"
 import './App.css'
 
 
@@ -93,6 +94,7 @@ const t = translations[locale];
           to { transform: rotate(360deg); }
         }
       `}</style>
+      <Analytics />
     </main>
     </LanguageContext.Provider>
   );

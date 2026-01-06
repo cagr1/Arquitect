@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
               <a href="mailto:studio@aether.arch" className="text-xl md:text-3xl hover:italic transition-all border-b border-white/10 w-fit pb-1">
                 bryanalezu@gmail.com
               </a>
-              <p className="text-xs uppercase tracking-widest opacity-40">{t.footer.locations}</p>
+              
             </div>
           </div>
           
