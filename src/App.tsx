@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense, lazy } from 'react'
 import { Header } from "./components/Header";
 import {Hero} from "./components/Hero";
-import {ArchitecturalVisualizer} from "./components/ArchitecturalVisualizer";
+// Lazy load heavy 3D component
+const ArchitecturalVisualizer = lazy(() => import("./components/ArchitecturalVisualizer"));
+import {Studio} from "./components/Studio";
 import {Philosophy} from "./components/Philosophy";
 import {Projects} from "./components/Projects";
 import {Footer} from "./components/Footer";
@@ -44,8 +46,15 @@ const t = translations[locale];
       
       <Philosophy />
       
-      <ArchitecturalVisualizer />
+      <Suspense fallback={
+        <div className="h-[50vh] w-full flex items-center justify-center bg-gray-50">
+          <div className="w-12 h-12 border-2 border-dashed border-gray-300 rounded-full animate-spin"></div>
+        </div>
+      }>
+        <ArchitecturalVisualizer />
+      </Suspense>
       
+      <Studio />
       
       
       <Projects />

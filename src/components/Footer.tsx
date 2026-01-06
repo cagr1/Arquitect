@@ -56,6 +56,7 @@ export const Footer: React.FC = () => {
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="text-[10px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity flex items-center space-x-2"
+            aria-label="Back to top"
           >
             <span>{t.footer.backToTop}</span>
             <svg className="w-3 h-3 -rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -82,11 +82,56 @@ export const en = {
     download: 'Download Index (PDF)',
     built: 'Built',
     explore: 'Explore full archive',
-    monolith: {
-      title: 'Monolith Residence',
-      location: 'Zurich, Switzerland',
+    kitchen: {
+      title: 'Modern Skylight Kitchen',
+      location: 'Samborondón, Ecuador',
+      category: 'Interior Design',
+    },
+    country_house: {
+      title: 'Country House',
+      location: 'The Highlands, Ecuador',
       category: 'Residential',
     },
+    kids_room: {
+      title: "Girl's Bedroom",
+      location: 'Samborondón, Ecuador',
+      category: 'Interior Design',
+    },
+    bath: {
+      title: 'Modern LED Bath',
+      location: 'Samborondón, Ecuador',
+      category: 'Interior Design',
+    },
+    living_dining: {
+      title: 'Living & Dining Room',
+      location: 'Samborondón, Ecuador',
+      category: 'Interior Design',
+    },
+    master_suite: {
+        title: 'Master Suite',
+        location: 'Guayaquil, Ecuador',
+        category: 'Interior Design',
+    },
+    patio: {
+        title: 'Contemporary Patio',
+        location: 'Samborondón, Ecuador',
+        category: 'Exterior',
+    },
+    clinic: {
+        title: 'Dental Clinic',
+        location: 'Guayaquil, Ecuador',
+        category: 'Commercial',
+    },
+  },
+  studio: {
+    label: 'Studio / 02',
+    title: 'The Shelter',
+    p1: 'Temporary Children\'s Shelter with permaculture criteria for Samborondón Canton. This project arises from the need to integrate architecture with the natural cycle.',
+    p2: 'A space designed to protect, teach, and heal, using local materials and passive strategies that respect the environment and dignify human life.',
+    stats: {
+        established: 'Year',
+        projects: '2023',
+    }
   },
   approach: {
     label: '03 / The Process',

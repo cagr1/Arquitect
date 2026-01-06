@@ -331,7 +331,7 @@ export const ArchitecturalVisualizer: React.FC = () => {
   }, [mode]);
 
   return (
-    <section id="visualizer" className="py-24 md:py-48 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section id="process" className="py-24 md:py-48 bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="px-6 md:px-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           

@@ -85,11 +85,56 @@ export const es = {
     download: 'Descargar Índice (PDF)',
     built: 'Construido',
     explore: 'Explorar archivo completo',
-    monolith: {
-      title: 'Residencia Monolith',
-      location: 'Zúrich, Suiza',
+    kitchen: {
+      title: 'Cocina Moderna Cenital',
+      location: 'Samborondón, Ecuador',
+      category: 'Interiorismo',
+    },
+    country_house: {
+      title: 'Casa de Campo',
+      location: 'La Sierra, Ecuador',
       category: 'Residencial',
     },
+    kids_room: {
+      title: 'Habitación Infantil',
+      location: 'Samborondón, Ecuador',
+      category: 'Interiorismo',
+    },
+    bath: {
+      title: 'Baño Moderno LED',
+      location: 'Samborondón, Ecuador',
+      category: 'Interiorismo',
+    },
+    living_dining: {
+      title: 'Sala Comedor',
+      location: 'Samborondón, Ecuador',
+      category: 'Interiorismo',
+    },
+    master_suite: {
+        title: 'Suite Principal',
+        location: 'Guayaquil, Ecuador',
+        category: 'Interiorismo',
+    },
+    patio: {
+        title: 'Patio Contemporáneo',
+        location: 'Samborondón, Ecuador',
+        category: 'Exterior',
+    },
+    clinic: {
+        title: 'Consultorio Odontológico',
+        location: 'Guayaquil, Ecuador',
+        category: 'Comercial',
+    },
+  },
+  studio: {
+    label: 'Studio / 02',
+    title: 'El Refugio',
+    p1: 'Albergue Temporal Infantil con criterios de permacultura para el cantón Samborondón. Este proyecto nace de la necesidad de integrar la arquitectura con el ciclo natural.',
+    p2: 'Un espacio diseñado para proteger, enseñar y sanar, utilizando materiales locales y estrategias pasivas que respetan el entorno y dignifican la vida humana.',
+    stats: {
+        established: 'Año',
+        projects: '2023',
+    }
   },
   approach: {
     label: '03 / El Proceso',

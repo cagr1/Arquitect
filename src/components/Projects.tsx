@@ -37,7 +37,8 @@ export const Projects: React.FC = () => {
                 <div className="relative overflow-hidden aspect-[16/9] md:aspect-[21/9] bg-neutral-900">
                   <img 
                     src={project.imageUrl} 
-                    alt={project.title}
+                    alt={(t.projects as any)[project.key]?.title || 'Project Image'}
+                    loading="lazy"
                     className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-[2s] ease-out grayscale group-hover:grayscale-0"
                   />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700"></div>

@@ -12,9 +12,9 @@ export const Philosophy: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
           <div className="md:col-span-1 hidden md:block">
-             <span className="text-[10px] uppercase tracking-[0.3em] opacity-40 origin-top-left rotate-90 inline-block whitespace-nowrap">
+             {/* <span className="text-[10px] uppercase tracking-[0.3em] opacity-40 origin-top-left rotate-90 inline-block whitespace-nowrap">
                {t.philosophy.label}
-             </span>
+             </span> */}
           </div>
           
           <div className="md:col-span-7">
@@ -33,8 +33,9 @@ export const Philosophy: React.FC = () => {
               </div>
               <div className="relative pt-12 md:pt-0">
                 <img 
-                  src="https://images.unsplash.com/photo-1510672981848-a1c4f1cb5ccf?auto=format&fit=crop&q=80&w=800" 
+                  src="/images/Image5.jpeg" 
                   alt="Light study"
+                  loading="lazy"
                   className="w-full aspect-[3/4] object-cover grayscale opacity-40"
                 />
                 <span className="absolute bottom-4 left-4 text-[9px] uppercase tracking-widest opacity-30">{t.philosophy.imageCaption}</span>

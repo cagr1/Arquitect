@@ -48,6 +48,7 @@ export const Header: React.FC = () => {
       <button 
         className="md:hidden flex flex-col space-y-1.5"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        aria-label="Toggle mobile menu"
       >
         <span className="w-6 h-px bg-white"></span>
         <span className="w-6 h-px bg-white"></span>

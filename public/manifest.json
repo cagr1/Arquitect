@@ -1,0 +1,16 @@
+{
+  "name": "Alejandro Romero Architecture",
+  "short_name": "AR Studio",
+  "description": "Portafolio de Arquitectura y Diseño Interior - Alejandro Romero",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/images/logo.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ]
+}
