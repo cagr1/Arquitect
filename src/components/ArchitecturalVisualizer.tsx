@@ -89,24 +89,26 @@ class SimpleOrbitControls {
 }
 
 // Main Component
+interface SceneData {
+  scene: THREE.Scene;
+  camera: THREE.PerspectiveCamera;
+  renderer: THREE.WebGLRenderer;
+  controls: SimpleOrbitControls;
+  solids: THREE.Group;
+  wires: THREE.Group;
+  grid: THREE.GridHelper;
+  progress: number;
+  targetMode: VizState;
+  frameId: number;
+}
+
 export const ArchitecturalVisualizer: React.FC = () => {
   const [mode, setMode] = useState<VizState>(VizStateValues.SCHEMATIC);
   const { locale } = useLanguage();
   const t = translations[locale];
   
   const containerRef = useRef<HTMLDivElement>(null);
-  const sceneDataRef = useRef<{
-    scene: THREE.Scene;
-    camera: THREE.PerspectiveCamera;
-    renderer: THREE.WebGLRenderer;
-    controls: SimpleOrbitControls;
-    solids: THREE.Group;
-    wires: THREE.Group;
-    grid: THREE.GridHelper;
-    progress: number;
-    targetMode: VizState;
-    frameId: number;
-  } | null>(null);
+  const sceneDataRef = useRef<SceneData | null>(null);
 
   // Three.js initialization
   useEffect(() => {
@@ -242,7 +244,7 @@ export const ArchitecturalVisualizer: React.FC = () => {
     scene.add(fillLight);
 
     // Store scene data BEFORE starting animation
-    const sceneData = {
+    const sceneData: SceneData = {
       scene,
       camera,
       renderer,
@@ -251,7 +253,7 @@ export const ArchitecturalVisualizer: React.FC = () => {
       wires: wireframesGroup,
       grid: grid,
       progress: 0,
-      targetMode: VizStateValues.SCHEMATIC as VizState,
+      targetMode: VizStateValues.SCHEMATIC,
       frameId: 0
     };
     
