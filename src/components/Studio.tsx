@@ -32,16 +32,7 @@ export const Studio: React.FC = () => {
             <p>{t.studio.p2}</p>
           </div>
           
-          <div className="mt-16 grid grid-cols-2 gap-8">
-             <div>
-                <h4 className="text-[10px] uppercase tracking-widest font-medium mb-2 text-gray-400">{t.studio.stats.established}</h4>
-                <p className="font-serif text-3xl">2018</p>
-             </div>
-             <div>
-                <h4 className="text-[10px] uppercase tracking-widest font-medium mb-2 text-gray-400">{t.studio.stats.projects}</h4>
-                <p className="font-serif text-3xl">40+</p>
-             </div>
-          </div>
+          
         </div>
       </div>
     </section>
